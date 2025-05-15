@@ -160,30 +160,32 @@
     }
 
     function uploadImage() {
-      const tipoCarita = document.getElementById('carita').value;
-      const dataUrl = canvas.toDataURL('image/png');
+  const tipoCarita = document.getElementById('carita').value;
+  const dataUrl = canvas.toDataURL('image/png');
+  const BASE_URL = window.location.origin;
 
-      fetch('/guardar', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ imagen: dataUrl, etiqueta: tipoCarita })
-      })
-      .then(response => {
-        if (!response.ok) {
-          throw new Error('Fallo en el servidor');
-        }
-        return response.json();
-      })
-      .then(data => {
-        alert(data.mensaje || 'Imagen enviada exitosamente');
-        clearCanvas();
-      })
-      .catch(error => alert('Error al enviar: ' + error.message));
+  fetch(`${BASE_URL}/guardar`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({ imagen: dataUrl, etiqueta: tipoCarita })
+  })
+  .then(response => {
+    if (!response.ok) {
+      throw new Error('Fallo en el servidor');
     }
+    return response.json();
+  })
+  .then(data => {
+    alert(data.mensaje || 'Imagen enviada exitosamente');
+    clearCanvas();
+  })
+  .catch(error => alert('Error al enviar: ' + error.message));
+}
   </script>
 </body>
 </html>
+
 
  
